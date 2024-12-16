@@ -101,7 +101,7 @@ const Login = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
     const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET, { expiresIn: '72h' });
-    res.status(200).json({ message: "Login successful", token });
+    res.status(200).json({ message: "Login successful", token, data: user });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error: error.message });
   }
@@ -109,11 +109,13 @@ const Login = async (req, res) => {
 };
 
 const Logout = (req, res) => {
+  // Clear the JWT token from the cookie
+  res.clearCookie('token');
   res.status(200).json({ message: "Logout successful" });
 };
 
 const getProfile = async (req, res) => {
-  const { id } = req.user;
+  const { id } = req.body;
   try {
     const user = await getUserById(id);
     if (user.length === 0) {
@@ -126,8 +128,7 @@ const getProfile = async (req, res) => {
 };
 
 const editProfile = async (req, res) => {
-  const { id } = req.user;
-  const { fullName, dateOfBirth, location, Gender, profileImage } = req.body;
+  const {id, fullName, dateOfBirth, location, Gender, profileImage } = req.body;
   try {
     await updateProfile(id, fullName, dateOfBirth, location, Gender, profileImage);
     res.status(200).json({ message: "Profile updated successfully" });
@@ -137,7 +138,7 @@ const editProfile = async (req, res) => {
 };
 
 const deleteProfile = async (req, res) => {
-  const { id } = req.user;
+  const { id } = req.body;
   try {
     await deleteProfileById(id);
     res.status(200).json({ message: "Profile deleted successfully" });

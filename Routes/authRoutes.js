@@ -10,6 +10,6 @@ router.post('/login', Login);
 router.post('/logout', Logout);
 router.get('/profile', getProfile);
 router.put('/profile/edit', editProfile);
-router.delete('/profile', deleteProfile);
+router.delete('/profile/delete', deleteProfile);
 
 module.exports = router;
