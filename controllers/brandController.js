@@ -38,6 +38,9 @@ const registerBrand = async (req, res) => {
 
 const getBrand = async (req, res) => {
   const { brandId } = req.body;
+  if (!brandId) {
+    return res.status(400).json({ message: "Brand Id is required" });
+  }
   try {
     const brand = await getBrandById(brandId);
     if (brand.length === 0) {
@@ -51,6 +54,21 @@ const getBrand = async (req, res) => {
 
 const editBrandDetails = async (req, res) => {
   const { brandName, category, logoImage, createdBy, BrandWhatsAppNo, Description, WorkingHours } = req.body;
+  if(!brandName) {
+    return res.status(400).json({ message: "Brand Name is required" });
+  } else if (!category) {
+    return res.status(400).json({ message: "Category is required" });
+  } else if (!logoImage) {
+    return res.status(400).json({ message: "Logo Image is required" });
+  } else if (!createdBy) {
+    return res.status(400).json({ message: "Created By is required" });
+  } else if (!BrandWhatsAppNo) {
+    return res.status(400).json({ message: "Brand WhatsApp Number is required" });
+  } else if (!Description) {
+    return res.status(400).json({ message: "Description is required" });
+  } else if (!WorkingHours) {
+    return res.status(400).json({ message: "Working Hours is required" });
+  }
   try {
     await updateBrand( brandName, category, logoImage, createdBy, BrandWhatsAppNo, Description, WorkingHours );
     res.status(200).json({ message: "Brand details updated successfully" });
@@ -61,6 +79,9 @@ const editBrandDetails = async (req, res) => {
 
 const deleteBrandDetails = async (req, res) => {
   const { id } = req.body;
+  if (!id) {
+    return res.status(400).json({ message: "Brand ID is required" });
+  }
   try {
     await deleteBrand(id);
     res.status(200).json({ message: "Profile deleted successfully" });
