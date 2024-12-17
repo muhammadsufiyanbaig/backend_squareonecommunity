@@ -4,7 +4,7 @@ const { sql } = require("../utils/db");
 async function createUserTable() {
   try {
     await sql`
-     CREATE TABLE IF NOT EXISTS Persons (
+    CREATE TABLE IF NOT EXISTS Persons (
     id UUID PRIMARY KEY,
     whatsAppNo VARCHAR(20) NOT NULL,
     hashpassward TEXT NOT NULL,
@@ -16,9 +16,7 @@ async function createUserTable() {
     profileImage TEXT,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(whatsAppNo)
-);
-
-    `;
+    );`;
     console.log("Persons table created successfully or already exists.");
   } catch (error) {
     console.error("Error creating Persons table:", error.message);
@@ -34,8 +32,7 @@ async function createUserOtpTable() {
     whatsAppNo VARCHAR(20) NOT NULL REFERENCES Persons(whatsAppNo) ON DELETE CASCADE,
     sentAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     expireAt TIMESTAMP
-);
-  `;
+    );`;
 }
 
 // Function to create the "Questions" table
@@ -99,11 +96,24 @@ async function createCodesTable() {
   await sql`
   CREATE TABLE IF NOT EXISTS codes (
     id UUID PRIMARY KEY,
+    code TEXT,
     userId UUID REFERENCES Persons(id),
     BrandId UUID REFERENCES BRANDS(id),
     DealId UUID REFERENCES DEALS(id)
 );
-  `;
+ `;
+}
+
+async function createAdsTable() {
+  await sql`
+  CREATE TABLE IF NOT EXISTS Ads (
+    id UUID PRIMARY KEY,
+    Banner TEXT,
+    CreatedBy UUID REFERENCES Admin(id),
+    BrandId UUID REFERENCES BRANDS(id),
+    DealId UUID REFERENCES DEALS(id)
+);
+ `;
 }
 
 async function initializeDatabase() {
@@ -115,6 +125,7 @@ async function initializeDatabase() {
     await createDealsTable();
     await createNotificationTable();
     await createCodesTable();
+    await createAdsTable()
     console.log("All tables created successfully!");
   } catch (error) {
     console.error("Error creating tables:", error.message);

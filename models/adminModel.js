@@ -1,8 +1,8 @@
 const { sql } = require("../utils/db");
 const { v4: uuidv4 } = require("uuid");
 
-const uniqueId = uuidv4();
 async function createAdmin(fullName, email, hashedPassword) {
+  const uniqueId = uuidv4();
   try {
     await sql`INSERT INTO Admin (id, fullName, email, hashPassward)
               VALUES (${uniqueId} ,${fullName}, ${email}, ${hashedPassword})`;
@@ -14,7 +14,7 @@ async function createAdmin(fullName, email, hashedPassword) {
 
 async function getAdminByEmail(email) {
   try {
-    const user = await sql`SELECT * FROM Admin WHERE emai = ${email}`;
+    const user = await sql`SELECT * FROM Admin WHERE email = ${email}`;
     return user;
   } catch (error) {
     console.error("Error in getAdminByEmail function:", error.message);

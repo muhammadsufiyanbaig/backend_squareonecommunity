@@ -1,8 +1,8 @@
 const { sql } = require('../utils/db'); 
 const { v4: uuidv4 } = require("uuid");
 
-const uniqueId = uuidv4();
 async function createUser(fullName, whatsAppNo, hashedPassword, dateOfBirth, location, Gender, LastLogin, profileImage) {
+  const uniqueId = uuidv4();
   try {
     await sql`INSERT INTO Persons (id, fullName, whatsAppNo, hashPassward, dateOfBirth, location, Gender, LastLogin, profileImage)
               VALUES (${uniqueId} ,${fullName}, ${whatsAppNo}, ${hashedPassword}, ${dateOfBirth}, ${location}, ${Gender}, ${LastLogin}, ${profileImage})`;
@@ -79,7 +79,7 @@ async function verifyOtp(whatsAppNo, otp) {
   }
 }
 
-async function updateProfile(id, fullName, dateOfBirth, location, Gender, profileImage) {
+async function updateProfile( fullName, dateOfBirth, location, Gender, profileImage) {
   try {
     await sql`UPDATE Persons SET fullName = ${fullName}, dateOfBirth = ${dateOfBirth}, location = ${location}, Gender = ${Gender}, profileImage = ${profileImage} WHERE id = ${id}`;
   } catch (error) {
