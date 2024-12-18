@@ -8,6 +8,7 @@ const authRoutes = require("./Routes/authRoutes");
 const adminAuthRoutes = require("./Routes/adminAuthRoutes");
 const brandRoutes = require("./Routes/brandRoutes");
 const dealRoutes = require("./Routes/dealRoutes");
+const adRoutes = require("./Routes/adRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
