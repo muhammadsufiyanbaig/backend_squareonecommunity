@@ -33,7 +33,7 @@ async function getUserById(id) {
   } 
 }
 
-async function updateUser(id, fullName, whatsAppNo, hashedPassword, dateOfBirth, location, Gender, LastLogin, profileImage) {
+async function updateUser(fullName, whatsAppNo, hashedPassword, dateOfBirth, location, Gender, LastLogin, profileImage) {
   try {
     await sql`UPDATE Persons SET fullName = ${fullName}, whatsAppNo = ${whatsAppNo}, hashedPassword = ${hashedPassword}, dateOfBirth = ${dateOfBirth}, location = ${location}, Gender = ${Gender}, LastLogin = ${LastLogin}, profileImage = ${profileImage} WHERE id = ${id}`;
     } catch (error) {   
