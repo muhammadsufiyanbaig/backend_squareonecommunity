@@ -34,7 +34,7 @@ async function getAdminById(id) {
 
 async function updateAdmin(id, fullName, email, hashedPassword) {
   try {
-    await sql`UPDATE Admin SET fullName = ${fullName}, email = ${email}, hashPassword = ${hashedPassword} WHERE id = ${id}`;
+    await sql`UPDATE Admin SET fullName = ${fullName}, email = ${email}, hashPassward = ${hashedPassword} WHERE id = ${id}`;
   } catch (error) {
     console.error("Error in updateUser function:", error.message);
     throw error;
