@@ -37,6 +37,7 @@ app.use("/auth", authRoutes);
 app.use("/admin/auth", adminAuthRoutes);
 app.use("/brand", brandRoutes);
 app.use("/deal", dealRoutes);
+app.use("/ad", adRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
