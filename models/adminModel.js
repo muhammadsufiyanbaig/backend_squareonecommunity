@@ -32,7 +32,7 @@ async function getAdminById(id) {
   }
 }
 
-async function updateAdmin(fullName, email, hashedPassword) {
+async function updateAdmin(id, fullName, email, hashedPassword) {
   try {
     await sql`UPDATE Admin SET fullName = ${fullName}, email = ${email}, hashPassword = ${hashedPassword} WHERE id = ${id}`;
   } catch (error) {

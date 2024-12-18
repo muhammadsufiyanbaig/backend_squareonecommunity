@@ -82,7 +82,7 @@ const getAdminProfile = async (req, res) => {
 };
 
 const editAdminProfile = async (req, res) => {
-  const { fullName, email, hashedPassword } = req.body;
+  const { id, fullName, email, hashedPassword } = req.body;
   if (!fullName) {
     res.status(400).json({ message: "Full Name is required" }); 
   } else if (!email) {
@@ -96,7 +96,7 @@ const editAdminProfile = async (req, res) => {
       .json({message: "Invalid email format",});
   }
   try {
-    await updateAdmin(fullName,  email, hashedPassword);
+    await updateAdmin(id, fullName,  email, hashedPassword);
     res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error updating profile", error: error.message });

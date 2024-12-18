@@ -1,5 +1,4 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+
 const { createBrand, getBrandById, updateBrand, deleteBrand } = require('../models/brandModel');
 
 const registerBrand = async (req, res) => {
@@ -44,7 +43,7 @@ const getBrand = async (req, res) => {
   try {
     const brand = await getBrandById(brandId);
     if (brand.length === 0) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "Brand not found" });
     }
     res.status(200).json({ message: "Brand details", data: brand[0] });
   } catch (error) {
@@ -84,7 +83,7 @@ const deleteBrandDetails = async (req, res) => {
   }
   try {
     await deleteBrand(id);
-    res.status(200).json({ message: "Profile deleted successfully" });
+    res.status(200).json({ message: "Brand deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting profile", error: error.message });
   }

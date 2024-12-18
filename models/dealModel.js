@@ -2,42 +2,42 @@ const { sql } = require("../utils/db");
 const { v4: uuidv4 } = require("uuid");
 
 async function createDeal(brandId, title, description, tagline, startDate, endDate, Picture, Banner) {
-  const uniqueId = uuidv4(); // Generate a new UUID for each brand
+  const uniqueId = uuidv4();
   try {
     await sql`INSERT INTO DEALS (id, brandId, title, description, tagline, startDate, endDate, Picture, Banner)
               VALUES (${uniqueId}, ${brandId}, ${title}, ${description}, ${tagline}, ${startDate}, ${endDate}, ${Picture}, ${Banner})`;
   } catch (error) {
-    console.error("Error in createBrand function:", error.message);
-    throw error; // Re-throw to propagate the error
+    console.error("Error in createDeal function:", error.message);
+    throw error; 
   }
 }
 
-async function getBrandById(id) {
+async function getDealById(id) {
   try {
-    const brand = await sql`SELECT * FROM BRANDS WHERE id = ${id}`;
+    const brand = await sql`SELECT * FROM DEALS WHERE id = ${id}`;
     return brand;
   } catch (error) {
-    console.error("Error in getBrandById function:", error.message);
+    console.error("Error in getDealById function:", error.message);
     throw error;
   }
 }
 
-async function updateBrand(brandName, category, logoImage, createdBy, BrandWhatsAppNo, Description, WorkingHours ) {
+async function updateDeal(id, title, description, tagline, startDate, endDate, Picture, Banner) {
   try {
-    await sql`UPDATE BRANDS SET brandName = ${brandName}, category = ${category}, logoImage = ${logoImage}, createdBy = ${createdBy}, BrandWhatsAppNo = ${BrandWhatsAppNo}, Description = ${Description}, WorkingHours = ${WorkingHours}  WHERE id = ${id}`;
+    await sql`UPDATE DEALS SET title = ${title}, description = ${description}, tagline = ${tagline}, startDate = ${startDate}, endDate = ${endDate}, Picture = ${Picture}, Banner = ${Banner}  WHERE id = ${id}`;
   } catch (error) {
-    console.error("Error in updateBrand function:", error.message);
+    console.error("Error in updateDeal function:", error.message);
     throw error;
   }
 }
 
-async function deleteBrand(id) {
+async function removeDeal(id) {
   try {
-    await sql`DELETE FROM BRANDS WHERE id = ${id}`;
+    await sql`DELETE FROM DEALS WHERE id = ${id}`;
   } catch (error) {
-    console.error("Error in deleteBrand function:", error.message);
+    console.error("Error in deleteDeal function:", error.message);
     throw error;
   }
 }
 
-module.exports = {createBrand, getBrandById, updateBrand, deleteBrand}
+module.exports = {createDeal, getDealById, updateDeal, removeDeal}
