@@ -224,7 +224,7 @@ const getProfile = async (req, res) => {
 };
 
 const editProfile = async (req, res) => {
-  const { fullName, dateOfBirth, location, Gender, profileImage } = req.body;
+  const { id, fullName, dateOfBirth, location, Gender, profileImage } = req.body;
   if (!fullName) {
     return res.status(400).json({ message: "Full Name is required" });
   } else if (!dateOfBirth) {
@@ -235,6 +235,8 @@ const editProfile = async (req, res) => {
     return res.status(400).json({ message: "Gender is required" });
   } else if (!profileImage) {
     return res.status(400).json({ message: "Profile image is required" });
+  } else if (!id) {
+    return res.status(400).json({ message: "ID is required" });
   }
   if (!isValidDateOfBirth(dateOfBirth)) {
     return res
@@ -242,7 +244,7 @@ const editProfile = async (req, res) => {
       .json({ message: "Invalid Date of Birth format", pattern: "dd-mm-yyyy" });
   }
   try {
-    await updateProfile(fullName, dateOfBirth, location, Gender, profileImage);
+    await updateProfile(id, fullName, dateOfBirth, location, Gender, profileImage);
     res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
     res
