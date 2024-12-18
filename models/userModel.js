@@ -79,7 +79,7 @@ async function verifyOtp(whatsAppNo, otp) {
   }
 }
 
-async function updateProfile( fullName, dateOfBirth, location, Gender, profileImage) {
+async function updateProfile( id, fullName, dateOfBirth, location, Gender, profileImage) {
   try {
     await sql`UPDATE Persons SET fullName = ${fullName}, dateOfBirth = ${dateOfBirth}, location = ${location}, Gender = ${Gender}, profileImage = ${profileImage} WHERE id = ${id}`;
   } catch (error) {
