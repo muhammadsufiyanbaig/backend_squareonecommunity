@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const authRoutes = require("./Routes/authRoutes");
 const adminAuthRoutes = require("./Routes/adminAuthRoutes");
 const brandRoutes = require("./Routes/brandRoutes");
+const dealRoutes = require("./Routes/dealRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -34,7 +35,7 @@ initializeDatabase();
 app.use("/auth", authRoutes);
 app.use("/admin/auth", adminAuthRoutes);
 app.use("/brand", brandRoutes);
-app.use("/", brandRoutes);
+app.use("/deal", dealRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
