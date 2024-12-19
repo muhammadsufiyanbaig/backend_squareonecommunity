@@ -1,5 +1,5 @@
 
-const { createBrand, getBrandById, updateBrand, deleteBrand } = require('../models/brandModel');
+const { createBrand, getBrandById, updateBrand, deleteBrand, getAllBrandsWithDeals } = require('../models/brandModel');
 
 const registerBrand = async (req, res) => {
   if (!req.body) {
@@ -51,6 +51,16 @@ const getBrand = async (req, res) => {
   }
 };
 
+
+const getAllBrands = async (req, res) => {
+  try {
+    const brands = await getAllBrandsWithDeals();
+    res.status(200).json({ data: brands });
+  } catch (error) {
+    res.status(500).json({ message: "Error getting all brands with deals", error: error.message });
+  }
+}
+
 const editBrandDetails = async (req, res) => {
   const { brandName, category, logoImage, createdBy, BrandWhatsAppNo, Description, WorkingHours } = req.body;
   if(!brandName) {
@@ -90,4 +100,4 @@ const deleteBrandDetails = async (req, res) => {
 };
 
 
-module.exports = { deleteBrandDetails, editBrandDetails, getBrand, registerBrand }
+module.exports = { deleteBrandDetails, getAllBrands, editBrandDetails, getBrand, registerBrand }

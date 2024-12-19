@@ -1,7 +1,15 @@
 const { sql } = require("../utils/db");
 const { v4: uuidv4 } = require("uuid");
 
-async function createBrand(brandName, category, logoImage, createdBy, BrandWhatsAppNo, Description, WorkingHours) {
+async function createBrand(
+  brandName,
+  category,
+  logoImage,
+  createdBy,
+  BrandWhatsAppNo,
+  Description,
+  WorkingHours
+) {
   const uniqueId = uuidv4(); // Generate a new UUID for each brand
   try {
     await sql`INSERT INTO BRANDS (id, brandName, category, logoImage, createdBy, BrandWhatsAppNo, Description, WorkingHours)
@@ -22,7 +30,59 @@ async function getBrandById(id) {
   }
 }
 
-async function updateBrand(brandName, category, logoImage, createdBy, BrandWhatsAppNo, Description, WorkingHours ) {
+async function getAllBrandsWithDeals() {
+  try {
+    const brands = await sql`SELECT
+    b.id AS "brandid",
+    b."brandname",
+    b."category",
+    b."logoimage",
+    b."createdby",
+    b."createdat",
+    b."brandwhatsappno",
+    b."description",
+    b."workinghours",
+    json_agg(
+        json_build_object(
+            'dealid', d.id,
+            'dealtitle', d.title,
+            'dealdescription', d.description,
+            'dealtagline', d.tagline,
+            'startdate', d."startdate",
+            'enddate', d."enddate",
+            'createdat', d."createdat",
+            'picture', d."picture",
+            'banner', d."banner"
+        )
+    ) AS "deals"
+FROM
+    "brands" b
+LEFT JOIN
+    "deals" d
+ON
+    b.id = d."brandid"
+GROUP BY
+    b.id;
+`;
+
+console.log(brands);
+
+    return brands;
+  } catch (error) {
+    console.error("Error in getAllBrandsWithDeals function:", error.message);
+    throw error;
+  }
+}
+
+async function updateBrand(
+  brandName,
+  category,
+  logoImage,
+  createdBy,
+  BrandWhatsAppNo,
+  Description,
+  WorkingHours
+) {
   try {
     await sql`UPDATE BRANDS SET brandName = ${brandName}, category = ${category}, logoImage = ${logoImage}, createdBy = ${createdBy}, BrandWhatsAppNo = ${BrandWhatsAppNo}, Description = ${Description}, WorkingHours = ${WorkingHours}  WHERE id = ${id}`;
   } catch (error) {
@@ -40,4 +100,4 @@ async function deleteBrand(id) {
   }
 }
 
-module.exports = {createBrand, getBrandById, updateBrand, deleteBrand}
+module.exports = { createBrand, getBrandById, getAllBrandsWithDeals ,updateBrand, deleteBrand };
