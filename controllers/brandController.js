@@ -55,7 +55,7 @@ const getBrand = async (req, res) => {
 const getAllBrands = async (req, res) => {
   try {
     const brands = await getAllBrandsWithDeals();
-    res.status(200).json({ data: brands });
+    res.status(200).json({ data: brands , message: "All brands with deals" });
   } catch (error) {
     res.status(500).json({ message: "Error getting all brands with deals", error: error.message });
   }
