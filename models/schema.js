@@ -129,10 +129,8 @@ async function createSupportTable() {
 async function createEventTable() {
   await sql`
   CREATE TABLE IF NOT EXISTS events (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY,
     title TEXT NOT NULL,
-    liked BOOLEAN DEFAULT FALSE,
-    going BOOLEAN DEFAULT FALSE,
     description TEXT,
     background TEXT,
     banner TEXT,
@@ -140,7 +138,18 @@ async function createEventTable() {
     end_date TIMESTAMP NOT NULL,
     activities TEXT[]
 );
-
+ `;
+}
+async function createEventDetailsTable() {
+  await sql`
+CREATE TABLE IF NOT EXISTS eventdetails (
+    id UUID PRIMARY KEY,
+    liked BOOLEAN DEFAULT FALSE,
+    going BOOLEAN DEFAULT FALSE,
+    userId UUID,
+    eventId UUID,
+    FOREIGN KEY (userId) REFERENCES Persons(id)
+);
  `;
 }
 
@@ -153,12 +162,13 @@ async function initializeDatabase() {
     await createDealsTable();
     await createNotificationTable();
     await createCodesTable();
-    await createAdsTable()
-    await createSupportTable()
-    await createEventTable()
+    await createAdsTable();
+    await createSupportTable();
+    await createEventTable(); 
+    await createEventDetailsTable(); 
     console.log("All tables created successfully!");
   } catch (error) {
-    console.error("Error creating tables:", error.message);
+    console.error("Error creating tables:", error.message, error.stack);
   }
 }
 
