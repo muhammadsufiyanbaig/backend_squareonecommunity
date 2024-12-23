@@ -48,7 +48,7 @@ const SignUp = async (req, res) => {
         pattern: "dd-mm-yyyy",
       });
     }
-    if (gender !== "male" && Gender !== "female") {
+    if (gender !== "male" && gender !== "female") {
       return res
         .status(400)
         .json({ message: "Gender must be either 'male' or 'female'" });
