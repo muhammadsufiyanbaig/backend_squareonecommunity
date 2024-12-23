@@ -5,7 +5,7 @@ const createDeals = async (req, res) => {
   if (!req.body) {
     return res.status(400).send({ error: "Request body is missing" });
   }
-  const { brandId, title, description, tagline, startDate, endDate, Picture, Banner } = req.body;
+  const { brandId, title, description, tagline, startDate, endDate, picture, banner } = req.body;
   if (!brandId) {
     return res.status(400).json({ message: "Brand Id is required" });
   } else if (!title) {
@@ -18,13 +18,13 @@ const createDeals = async (req, res) => {
     return res.status(400).json({ message: "Start Date is required" });
   } else if (!endDate) {
     return res.status(400).json({ message: "End Date is required" });
-  } else if (!Picture) {
+  } else if (!picture) {
     return res.status(400).json({ message: "Picture is required" });
-  }else if (!Banner) {
+  }else if (!banner) {
     return res.status(400).json({ message: "Banner is required" });
   }
   try {
-    await createDeal(brandId, title, description, tagline, startDate, endDate, Picture, Banner);
+    await createDeal(brandId, title, description, tagline, startDate, endDate, picture, banner);
     res.status(201).json({ message: "Deal is successfully created" });
   } catch (error) {
     res
@@ -38,12 +38,12 @@ const createDeals = async (req, res) => {
 }; 
 
 const getDeal = async (req, res) => {
-  const { DealId } = req.body;
-  if (!DealId) {
+  const { dealId } = req.body;
+  if (!dealId) {
     return res.status(400).json({ message: "Deal Id is required" });
   }
   try {
-    const deal = await getDealById(DealId);
+    const deal = await getDealById(dealId);
     if (deal.length === 0) {
       return res.status(404).json({ message: "deal not found" });
     }
@@ -54,7 +54,7 @@ const getDeal = async (req, res) => {
 };
 
 const editDeal = async (req, res) => {
-  const { id, brandId, title, description, tagline, startDate, endDate, Picture, Banner } = req.body;
+  const { id, brandId, title, description, tagline, startDate, endDate, picture, banner } = req.body;
   if(!id) {
     return res.status(400).json({ message: "Id is required" });
   } else if (!brandId) {
@@ -69,13 +69,13 @@ const editDeal = async (req, res) => {
     return res.status(400).json({ message: "Start Date is required" });
   } else if (!endDate) {
     return res.status(400).json({ message: "End Date is required" });
-  } else if (!Picture) {
+  } else if (!picture) {
     return res.status(400).json({ message: "Picture is required" });
-  } else if (!Banner) {
+  } else if (!banner) {
     return res.status(400).json({ message: "Banner is required" });
   }
   try {
-    await updateDeal( id, brandId, title, description, tagline, startDate, endDate, Picture, Banner);
+    await updateDeal( id, brandId, title, description, tagline, startDate, endDate, picture, banner);
     res.status(200).json({ message: "Deal updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error updating Deal", error: error.message });

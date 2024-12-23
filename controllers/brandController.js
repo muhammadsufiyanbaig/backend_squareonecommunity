@@ -5,7 +5,7 @@ const registerBrand = async (req, res) => {
   if (!req.body) {
     return res.status(400).send({ error: "Request body is missing" });
   }
-  const { brandName, category, logoImage, createdBy, BrandWhatsAppNo, Description, WorkingHours } = req.body;
+  const { brandName, category, logoImage, createdBy, brandWhatsAppNo, description, workingHours } = req.body;
   if (!brandName) {
     return res.status(400).json({ message: "Brand Name is required" });
   } else if (!category) {
@@ -14,15 +14,15 @@ const registerBrand = async (req, res) => {
     return res.status(400).json({ message: "Logo Image is required" });
   } else if (!createdBy) {
     return res.status(400).json({ message: "Created By is required" });
-  } else if (!BrandWhatsAppNo) {
+  } else if (!brandWhatsAppNo) {
     return res.status(400).json({ message: "Brand WhatsApp Number is required" });
-  } else if (!Description) {
+  } else if (!description) {
     return res.status(400).json({ message: "Description is required" });
-  } else if (!WorkingHours) {
+  } else if (!workingHours) {
     return res.status(400).json({ message: "Working Hours is required" });
   }
   try {
-    await createBrand(brandName, category, logoImage, createdBy, BrandWhatsAppNo, Description, WorkingHours);
+    await createBrand(brandName, category, logoImage, createdBy, brandWhatsAppNo, description, workingHours);
     res.status(201).json({ message: "Brand register successfully" });
   } catch (error) {
     res
@@ -62,7 +62,7 @@ const getAllBrands = async (req, res) => {
 }
 
 const editBrandDetails = async (req, res) => {
-  const { brandName, category, logoImage, createdBy, BrandWhatsAppNo, Description, WorkingHours } = req.body;
+  const {brandName, category, logoImage, createdBy, brandWhatsAppNo, description, workingHours} = req.body;
   if(!brandName) {
     return res.status(400).json({ message: "Brand Name is required" });
   } else if (!category) {
@@ -71,15 +71,15 @@ const editBrandDetails = async (req, res) => {
     return res.status(400).json({ message: "Logo Image is required" });
   } else if (!createdBy) {
     return res.status(400).json({ message: "Created By is required" });
-  } else if (!BrandWhatsAppNo) {
+  } else if (!brandWhatsAppNo) {
     return res.status(400).json({ message: "Brand WhatsApp Number is required" });
-  } else if (!Description) {
+  } else if (!description) {
     return res.status(400).json({ message: "Description is required" });
-  } else if (!WorkingHours) {
+  } else if (!workingHours) {
     return res.status(400).json({ message: "Working Hours is required" });
   }
   try {
-    await updateBrand( brandName, category, logoImage, createdBy, BrandWhatsAppNo, Description, WorkingHours );
+    await updateBrand(brandName, category, logoImage, createdBy, brandWhatsAppNo, description, workingHours);
     res.status(200).json({ message: "Brand details updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error updating brand details", error: error.message });

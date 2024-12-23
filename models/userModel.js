@@ -8,7 +8,7 @@ async function createUser(fullName, whatsAppNo, hashedPassword, dateOfBirth, loc
               VALUES (${uniqueId} ,${fullName}, ${whatsAppNo}, ${hashedPassword}, ${dateOfBirth}, ${location}, ${Gender}, ${LastLogin}, ${profileImage})`;
   } catch (error) {
     console.error("Error in createUser function:", error.message);
-    throw error; // Re-throw to propagate the error
+    throw error; 
   }
 }
 
@@ -60,24 +60,6 @@ async function updatePassword(whatsAppNo, newPassword) {
   }
 }
 
-async function storeOtp(whatsAppNo, otp) {
-  try {
-    await sql`UPDATE Persons SET otp = ${otp} WHERE whatsAppNo = ${whatsAppNo}`;
-  } catch (error) {
-    console.error("Error in storeOtp function:", error.message);
-    throw error;
-  }
-}
-
-async function verifyOtp(whatsAppNo, otp) {
-  try {
-    const result = await sql`SELECT * FROM Persons WHERE whatsAppNo = ${whatsAppNo} AND otp = ${otp}`;
-    return result.length > 0;
-  } catch (error) {
-    console.error("Error in verifyOtp function:", error.message);
-    throw error;
-  }
-}
 
 async function updateProfile( id, fullName, dateOfBirth, location, Gender, profileImage) {
   try {
@@ -97,4 +79,4 @@ async function deleteProfileById(id) {
   }
 }
 
-module.exports = { createUser, getUserByWhatsAppNo, getUserById, updateUser, deleteUser, updatePassword, storeOtp, verifyOtp, updateProfile, deleteProfileById };
+module.exports = { createUser, getUserByWhatsAppNo, getUserById, updateUser, deleteUser, updatePassword,  updateProfile, deleteProfileById };

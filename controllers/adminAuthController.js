@@ -7,10 +7,10 @@ const AdminSignUp = async (req, res) => {
   if (!req.body) {
     return res.status(400).send({ error: "Request body is missing" });
   }
-  const { fullName, email, Password } = req.body;
+  const { fullName, email, password } = req.body;
     if (!email) {
       return res.status(400).json({ message: "Email is required" });
-    } else if (!Password) {
+    } else if (!password) {
       return res.status(400).json({ message: "Password is required" });
     } else if (!fullName) {
       return res.status(400).json({ message: "Full Name is required" });

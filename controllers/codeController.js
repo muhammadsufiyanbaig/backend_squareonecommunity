@@ -4,18 +4,18 @@ const createCode = async (req, res) => {
   if (!req.body) {
     return res.status(400).send({ error: "Request body is missing" });
   }
-  const {code, userId, BrandId, DealId} = req.body;
+  const {code, userId, brandId, dealId} = req.body;
   if (!code) {
     return res.status(400).json({ message: "Code is required" });
   } else if (!userId) {
     return res.status(400).json({ message: "userId is required" });
-  } else if (!BrandId) {
+  } else if (!brandId) {
     return res.status(400).json({ message: "BrandId is required" });
-  } else if (!DealId) {
+  } else if (!dealId) {
     return res.status(400).json({ message: "DealId is required" });
   } 
   try {
-    await insertCode(code, userId, BrandId, DealId);
+    await insertCode(code, userId, brandId, dealId);
     res.status(201).json({ message: "Code inserted is successfully created" });
   } catch (error) {
     res

@@ -5,7 +5,7 @@ const createDeals = async (req, res) => {
   if (!req.body) {
     return res.status(400).send({ error: "Request body is missing" });
   }
-  const { title, description, background, banner, start_date, end_date, activities} = req.body;
+  const { title, description, background, banner, startDate, endDate, activities} = req.body;
   if (!title) {
     return res.status(400).json({ message: "Brand Id is required" });
   } else if (!description) {
@@ -14,9 +14,9 @@ const createDeals = async (req, res) => {
     return res.status(400).json({ message: "Description is required" });
   } else if (!banner) {
     return res.status(400).json({ message: "tagline is required" });
-  } else if (!start_date) {
+  } else if (!startDate) {
     return res.status(400).json({ message: "Start Date is required" });
-  } else if (!end_date) {
+  } else if (!endDate) {
     return res.status(400).json({ message: "End Date is required" });
   } else if (!activities) {
     return res.status(400).json({ message: "Picture is required" });

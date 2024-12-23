@@ -1,7 +1,7 @@
 const { sql } = require("../utils/db");
 const { v4: uuidv4 } = require("uuid");
 
-async function createAd(Banner, CreatedBy, BrandId, DealId) {
+async function insertAd(Banner, CreatedBy, BrandId, DealId) {
   const uniqueId = uuidv4();
   try {
     await sql`INSERT INTO Ads (id, Banner, CreatedBy, BrandId, DealId)
@@ -40,4 +40,4 @@ async function removeAd(id) {
   }
 }
 
-module.exports = {createAd, getAds, updateAd, removeAd}
+module.exports = {insertAd, getAds, updateAd, removeAd}

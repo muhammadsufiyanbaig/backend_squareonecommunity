@@ -1,23 +1,22 @@
 
-const { removeAd, updateAd, getAds } = require('../models/adsModel');
-const { createDeal, getDealById, updateDeal, removeDeal } = require('../models/dealModel');
+const { removeAd, updateAd, getAds, insertAd } = require('../models/adsModel');
 
 const createAd = async (req, res) => {
   if (!req.body) {
     return res.status(400).send({ error: "Request body is missing" });
   }
-  const {  Banner, CreatedBy, BrandId, DealId } = req.body;
-  if (!Banner) {
+  const {  banner, createdBy, brandId, dealId } = req.body;
+  if (!banner) {
     return res.status(400).json({ message: "Brand Id is required" });
-  } else if (!CreatedBy) {
+  } else if (!createdBy) {
     return res.status(400).json({ message: "Tittle is required" });
-  } else if (!BrandId) {
+  } else if (!brandId) {
     return res.status(400).json({ message: "Description is required" });
-  } else if (!DealId) {
+  } else if (!dealId) {
     return res.status(400).json({ message: "tagline is required" });
   } 
   try {
-    await createDeal(brandId, title, description, tagline, startDate, endDate, Picture, Banner);
+    await insertAd(banner, createdBy, brandId, dealId) ;
     res.status(201).json({ message: "Deal is successfully created" });
   } catch (error) {
     res
@@ -43,20 +42,20 @@ const getAllAds = async (req, res) => {
 };
 
 const editAd = async (req, res) => {
-  const { id, Banner, CreatedBy, BrandId, DealId} = req.body;
+  const { id, banner, createdBy, brandId, dealId} = req.body;
   if(!id) {
     return res.status(400).json({ message: "Id is required" });
-  } else if (!Banner) {
+  } else if (!banner) {
     return res.status(400).json({ message: "Banner is required" });
-  } else if (!CreatedBy) {
+  } else if (!createdBy) {
     return res.status(400).json({ message: "Admin Id is required" });
-  } else if (!BrandId) {
+  } else if (!brandId) {
     return res.status(400).json({ message: "Brand Id By is required" });
-  } else if (!DealId) {
+  } else if (!dealId) {
     return res.status(400).json({ message: "Deal Id is required" });
   } 
   try {
-    await updateAd(id, Banner, CreatedBy, BrandId, DealId);
+    await updateAd(id, banner, createdBy, brandId, dealId);
     res.status(200).json({ message: "Ad updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error updating Ad", error: error.message });

@@ -4,12 +4,9 @@ const {
   createUser,
   getUserByWhatsAppNo,
   updatePassword,
-  storeOtp,
-  verifyOtp,
   updateProfile,
   deleteProfileById,
 } = require("../models/userModel");
-const { sendOtpToWhatsApp } = require("../utils/otpService"); // Assume you have a utility to send OTP
 const { isValidPhone, isValidDateOfBirth } = require("../utils/validator");
 
 const SignUp = async (req, res) => {
@@ -19,16 +16,16 @@ const SignUp = async (req, res) => {
   const {
     fullName,
     whatsAppNo,
-    Password,
+    password,
     dateOfBirth,
     location,
-    Gender,
+    gender,
     profileImage,
   } = req.body;
   try {
     if (!whatsAppNo) {
       return res.status(400).json({ message: "WhatsApp number is required" });
-    } else if (!Password) {
+    } else if (!password) {
       return res.status(400).json({ message: "Password is required" });
     } else if (!fullName) {
       return res.status(400).json({ message: "Full Name is required" });
@@ -36,7 +33,7 @@ const SignUp = async (req, res) => {
       return res.status(400).json({ message: "Date of Birth is required" });
     } else if (!location) {
       return res.status(400).json({ message: "Location is required" });
-    } else if (!Gender) {
+    } else if (!gender) {
       return res.status(400).json({ message: "Gender is required" });
     }
     if (!isValidPhone(whatsAppNo)) {
@@ -68,7 +65,7 @@ const SignUp = async (req, res) => {
       hashedPassword, // Ensure this matches the column name in your database
       dateOfBirth,
       location,
-      Gender,
+      gender,
       LastLogin,
       profileImage
     );
@@ -82,55 +79,19 @@ const SignUp = async (req, res) => {
   }
 };
 
-const forgotPassword = async (req, res) => {
-  const { whatsAppNo } = req.body;
-  if (!whatsAppNo) {
-    return res.status(400).json({ message: "WhatsApp number is required" });
-  }
-  
-  if (!isValidPhone(whatsAppNo)) {
-    return res.status(400).json({
-      message: "Invalid WhatsApp number format",
-      pattern: "+xx-xxxxxxxxxx",
-    });
-  }
-  try {
-    const user = await getUserByWhatsAppNo(whatsAppNo);
-    if (user.length === 0) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    await storeOtp(whatsAppNo, otp);
-    await sendOtpToWhatsApp(whatsAppNo, otp);
-    res.status(200).json({ message: "OTP sent to WhatsApp" });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error sending OTP", error: error.message });
-  }
-};
-
 const newPassword = async (req, res) => {
-  const { whatsAppNo, otp, newPassword } = req.body;
+  const { whatsAppNo, newPassword } = req.body;
   if (!whatsAppNo) {
     return res.status(400).json({ message: "WhatsApp number is required" });
-  } else if (!otp) {
-    return res.status(400).json({ message: "OTP is required" });
   } else if (!newPassword) {
     return res.status(400).json({ message: "New password is required" });
-  }
-
-  if (!isValidPhone(whatsAppNo)) {
+  } else if (!isValidPhone(whatsAppNo)) {
     return res.status(400).json({
       message: "Invalid WhatsApp number format",
       pattern: "+xx-xxxxxxxxxx",
     });
   }
   try {
-    const isValidOtp = await verifyOtp(whatsAppNo, otp);
-    if (!isValidOtp) {
-      return res.status(400).json({ message: "Invalid OTP" });
-    }
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     await updatePassword(whatsAppNo, hashedPassword);
     res.status(200).json({ message: "Password updated successfully" });
@@ -141,40 +102,13 @@ const newPassword = async (req, res) => {
   }
 };
 
-const OTP_Verification = async (req, res) => {
-  const { whatsAppNo, otp } = req.body;
-  if (!whatsAppNo) {
-    return res.status(400).json({ message: "WhatsApp number is required" });
-  } else if (!otp) {
-    return res.status(400).json({ message: "OTP is required" });
-  }
-  if (!isValidPhone(whatsAppNo)) {
-    return res.status(400).json({
-      message: "Invalid WhatsApp number format",
-      pattern: "+xx-xxxxxxxxxx",
-    });
-  }
-  try {
-    const isValidOtp = await verifyOtp(whatsAppNo, otp);
-    if (!isValidOtp) {
-      return res.status(400).json({ message: "Invalid OTP" });
-    }
-    res.status(200).json({ message: "OTP verified successfully" });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error verifying OTP", error: error.message });
-  }
-};
-
 const Login = async (req, res) => {
   const { whatsAppNo, password } = req.body;
   if (!whatsAppNo) {
     return res.status(400).json({ message: "WhatsApp number is required" });
   } else if (!password) {
     return res.status(400).json({ message: "Password is required" });
-  }
-  if (!isValidPhone(whatsAppNo)) {
+  } else if (!isValidPhone(whatsAppNo)) {
     return res.status(400).json({
       message: "Invalid WhatsApp number format",
       pattern: "+xx-xxxxxxxxxx",
@@ -200,7 +134,6 @@ const Login = async (req, res) => {
 };
 
 const Logout = (req, res) => {
-  // Clear the JWT token from the cookie
   res.clearCookie("token");
   res.status(200).json({ message: "Logout successful" });
 };
@@ -224,14 +157,14 @@ const getProfile = async (req, res) => {
 };
 
 const editProfile = async (req, res) => {
-  const { id, fullName, dateOfBirth, location, Gender, profileImage } = req.body;
+  const { id, fullName, dateOfBirth, location, gender, profileImage } = req.body;
   if (!fullName) {
     return res.status(400).json({ message: "Full Name is required" });
   } else if (!dateOfBirth) {
     return res.status(400).json({ message: "Date of Birth is required" });
   } else if (!location) {
     return res.status(400).json({ message: "Location is required" });
-  } else if (!Gender) {
+  } else if (!gender) {
     return res.status(400).json({ message: "Gender is required" });
   } else if (!profileImage) {
     return res.status(400).json({ message: "Profile image is required" });
@@ -244,7 +177,7 @@ const editProfile = async (req, res) => {
       .json({ message: "Invalid Date of Birth format", pattern: "dd-mm-yyyy" });
   }
   try {
-    await updateProfile(id, fullName, dateOfBirth, location, Gender, profileImage);
+    await updateProfile(id, fullName, dateOfBirth, location, gender, profileImage);
     res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
     res
@@ -270,9 +203,7 @@ const deleteProfile = async (req, res) => {
 
 module.exports = {
   SignUp,
-  forgotPassword,
   newPassword,
-  OTP_Verification,
   Login,
   Logout,
   getProfile,
