@@ -11,6 +11,7 @@ const dealRoutes = require("./Routes/dealRoutes");
 const adRoutes = require("./Routes/adRoutes");
 const supportRoutes = require("./Routes/supportRoutes");
 const codeRoutes = require("./Routes/codeRoutes");
+const eventRoutes = require("./Routes/eventRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -42,6 +43,8 @@ app.use("/deal", dealRoutes);
 app.use("/ad", adRoutes);
 app.use("/support", supportRoutes);
 app.use("/code", codeRoutes);
+app.use("/event", eventRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

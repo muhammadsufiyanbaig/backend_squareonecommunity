@@ -62,7 +62,7 @@ const getAllBrands = async (req, res) => {
 }
 
 const editBrandDetails = async (req, res) => {
-  const {brandName, category, logoImage, createdBy, brandWhatsAppNo, description, workingHours} = req.body;
+  const {id ,brandName, category, logoImage, createdBy, brandWhatsAppNo, description, workingHours} = req.body;
   if(!brandName) {
     return res.status(400).json({ message: "Brand Name is required" });
   } else if (!category) {
@@ -77,9 +77,11 @@ const editBrandDetails = async (req, res) => {
     return res.status(400).json({ message: "Description is required" });
   } else if (!workingHours) {
     return res.status(400).json({ message: "Working Hours is required" });
+  }else if (!id) {
+    return res.status(400).json({ message: "Brand Id is required" });
   }
   try {
-    await updateBrand(brandName, category, logoImage, createdBy, brandWhatsAppNo, description, workingHours);
+    await updateBrand(id , brandName, category, logoImage, createdBy, brandWhatsAppNo, description, workingHours);
     res.status(200).json({ message: "Brand details updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error updating brand details", error: error.message });
@@ -95,7 +97,7 @@ const deleteBrandDetails = async (req, res) => {
     await deleteBrand(id);
     res.status(200).json({ message: "Brand deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting profile", error: error.message });
+    res.status(500).json({ message: "Error deleting brand", error: error.message });
   }
 };
 

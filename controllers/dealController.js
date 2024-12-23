@@ -91,7 +91,7 @@ const deleteDeal = async (req, res) => {
     await removeDeal(id);
     res.status(200).json({ message: "Deal deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting profile", error: error.message });
+    res.status(500).json({ message: "Error deleting deal", error: error.message });
   }
 };
 

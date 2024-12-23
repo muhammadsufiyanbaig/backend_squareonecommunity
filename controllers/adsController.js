@@ -7,13 +7,13 @@ const createAd = async (req, res) => {
   }
   const {  banner, createdBy, brandId, dealId } = req.body;
   if (!banner) {
-    return res.status(400).json({ message: "Brand Id is required" });
+    return res.status(400).json({ message: "Banner is required" });
   } else if (!createdBy) {
-    return res.status(400).json({ message: "Tittle is required" });
+    return res.status(400).json({ message: "Admin Id is required" });
   } else if (!brandId) {
-    return res.status(400).json({ message: "Description is required" });
+    return res.status(400).json({ message: "Brand Id is required" });
   } else if (!dealId) {
-    return res.status(400).json({ message: "tagline is required" });
+    return res.status(400).json({ message: "Deal Id is required" });
   } 
   try {
     await insertAd(banner, createdBy, brandId, dealId) ;
@@ -44,7 +44,7 @@ const getAllAds = async (req, res) => {
 const editAd = async (req, res) => {
   const { id, banner, createdBy, brandId, dealId} = req.body;
   if(!id) {
-    return res.status(400).json({ message: "Id is required" });
+    return res.status(400).json({ message: "Ad Id is required" });
   } else if (!banner) {
     return res.status(400).json({ message: "Banner is required" });
   } else if (!createdBy) {
@@ -71,7 +71,7 @@ const deleteAd = async (req, res) => {
     await removeAd(id);
     res.status(200).json({ message: "Ad deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting profile", error: error.message });
+    res.status(500).json({ message: "Error deleting ad", error: error.message });
   }
 };
 

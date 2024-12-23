@@ -72,6 +72,7 @@ GROUP BY
 }
 
 async function updateBrand(
+  id,
   brandName,
   category,
   logoImage,

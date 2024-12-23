@@ -8,11 +8,11 @@ const createCode = async (req, res) => {
   if (!code) {
     return res.status(400).json({ message: "Code is required" });
   } else if (!userId) {
-    return res.status(400).json({ message: "userId is required" });
+    return res.status(400).json({ message: "user Id is required" });
   } else if (!brandId) {
-    return res.status(400).json({ message: "BrandId is required" });
+    return res.status(400).json({ message: "Brand Id is required" });
   } else if (!dealId) {
-    return res.status(400).json({ message: "DealId is required" });
+    return res.status(400).json({ message: "Deal Id is required" });
   } 
   try {
     await insertCode(code, userId, brandId, dealId);
@@ -37,7 +37,7 @@ const deleteCode = async (req, res) => {
     await removeCode(id);
     res.status(200).json({ message: "Complaint deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting profile", error: error.message });
+    res.status(500).json({ message: "Error deleting code", error: error.message });
   }
 };
 

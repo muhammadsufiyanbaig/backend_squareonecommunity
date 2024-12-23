@@ -66,7 +66,7 @@ const deleteComplaint = async (req, res) => {
     await removeComplaint(id);
     res.status(200).json({ message: "Complaint deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting profile", error: error.message });
+    res.status(500).json({ message: "Error deleting complaint", error: error.message });
   }
 };
 
