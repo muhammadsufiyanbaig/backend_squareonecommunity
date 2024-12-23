@@ -53,7 +53,7 @@ const SignUp = async (req, res) => {
         .status(400)
         .json({ message: "Gender must be either 'male' or 'female'" });
     }
-    const hashedPassword = await bcrypt.hash(Password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const user = await getUserByWhatsAppNo(whatsAppNo);
     if (user.length > 0) {
       return res.status(400).json({ message: "User already exists" });

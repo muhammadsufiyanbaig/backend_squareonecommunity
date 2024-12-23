@@ -21,7 +21,7 @@ const AdminSignUp = async (req, res) => {
         .json({message: "Invalid email format",});
     }
   try {
-    const hashedPassword = await bcrypt.hash(Password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const admin = await getAdminByEmail(email);
     if (admin.length > 0) {
       return res.status(400).json({ message: "Admin already exists" });
