@@ -30,6 +30,56 @@ async function getBrandById(id) {
   }
 }
 
+async function getAllBrandsWithDealsAndWithCode() {
+  try {
+    const brands = await sql`SELECT
+  b.id AS brandId,
+  b.brandName,
+  b.category,
+  b.logoImage,
+  b.createdBy,
+  b.createdAt,
+  b.BrandWhatsAppNo,
+  b.Description,
+  b.WorkingHours,
+  json_agg(
+    json_build_object(
+      'dealid', d.id,
+      'title', d.title,
+      'description', d.description,
+      'tagline', d.tagline,
+      'startDate', d.startDate,
+      'endDate', d.endDate,
+      'createdAt', d.createdAt,
+      'Picture', d.Picture,
+      'Banner', d.Banner,
+      'code', (
+        SELECT json_agg(
+          json_build_object(
+            'code', c.code,
+            'fullName', p.fullName,
+            'whatsAppNo', p.whatsAppNo,
+            'profileImage', p.profileImage
+          )
+        )
+        FROM codes c
+        INNER JOIN Persons p ON c.userId = p.id
+        WHERE c.DealId = d.id
+      )
+    )
+  ) AS deals
+FROM BRANDS b
+LEFT JOIN DEALS d ON b.id = d.brandId
+GROUP BY b.id;
+
+`;
+    return brands;
+  } catch (error) {
+    console.error("Error in getAllBrandsWithDeals function:", error.message);
+    throw error;
+  }
+}
+
 async function getAllBrandsWithDeals() {
   try {
     const brands = await sql`SELECT
@@ -98,4 +148,4 @@ async function deleteBrand(id) {
   }
 }
 
-module.exports = { createBrand, getBrandById, getAllBrandsWithDeals ,updateBrand, deleteBrand };
+module.exports = { getAllBrandsWithDealsAndWithCode, createBrand, getBrandById, getAllBrandsWithDeals ,updateBrand, deleteBrand };

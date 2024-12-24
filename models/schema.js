@@ -24,16 +24,16 @@ async function createUserTable() {
 }
 
 // Function to create the "Classes" table
-async function createUserOtpTable() {
-  await sql`
-    CREATE TABLE IF NOT EXISTS otp_persons (
-    id UUID PRIMARY KEY,
-    otp INT NOT NULL,
-    whatsAppNo VARCHAR(20) NOT NULL REFERENCES Persons(whatsAppNo) ON DELETE CASCADE,
-    sentAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    expireAt TIMESTAMP
-    );`;
-}
+// async function createUserOtpTable() {
+//   await sql`
+//     CREATE TABLE IF NOT EXISTS otp_persons (
+//     id UUID PRIMARY KEY,
+//     otp INT NOT NULL,
+//     whatsAppNo VARCHAR(20) NOT NULL REFERENCES Persons(whatsAppNo) ON DELETE CASCADE,
+//     sentAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//     expireAt TIMESTAMP
+//     );`;
+// }
 
 // Function to create the "Questions" table
 async function createAdminTable() {

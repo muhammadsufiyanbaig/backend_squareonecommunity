@@ -130,7 +130,7 @@ const Login = async (req, res) => {
       expiresIn: "72h",
     });
     res.cookie("token", token);
-    res.status(200).json({ message: "Login successful", token, data: user });
+    res.status(200).json({ message: "Login successful", token, data: user[0] });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error: error.message });
   }
