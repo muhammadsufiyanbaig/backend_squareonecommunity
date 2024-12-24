@@ -6,6 +6,7 @@ const {
   updatePassword,
   updateProfile,
   deleteProfileById,
+  getAllUsersData,
 } = require("../models/userModel");
 const { isValidPhone, isValidDateOfBirth } = require("../utils/validator");
 
@@ -157,6 +158,19 @@ const getProfile = async (req, res) => {
       .json({ message: "Error fetching profile", error: error.message });
   }
 };
+const getAllUsersForAdmin = async (req, res) => {
+  try {
+    const users = await getAllUsersData();
+    if (users.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({message: "All Users data", data: users });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching profile", error: error.message });
+  }
+};
 
 const editProfile = async (req, res) => {
   const { id, fullName, dateOfBirth, location, gender, profileImage } = req.body;
@@ -209,6 +223,7 @@ module.exports = {
   Login,
   Logout,
   getProfile,
+  getAllUsersForAdmin,
   editProfile,
   deleteProfile,
 };

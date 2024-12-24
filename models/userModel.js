@@ -22,6 +22,15 @@ async function getUserByWhatsAppNo(whatsAppNo) {
     throw error; 
   }
 }
+async function getAllUsersData() {
+  try {
+    const user = await sql`SELECT * FROM Persons}`;
+    return user;
+  } catch (error) {
+    console.error("Error in getUserByWhatsAppNo function:", error.message);
+    throw error; 
+  }
+}
 
 async function getUserById(id) {
   try {
@@ -33,27 +42,10 @@ async function getUserById(id) {
   } 
 }
 
-async function updateUser(id, fullName, whatsAppNo, hashedPassword, dateOfBirth, location, Gender, LastLogin, profileImage) {
-  try {
-    await sql`UPDATE Persons SET fullName = ${fullName}, whatsAppNo = ${whatsAppNo}, hashedPassword = ${hashedPassword}, dateOfBirth = ${dateOfBirth}, location = ${location}, Gender = ${Gender}, LastLogin = ${LastLogin}, profileImage = ${profileImage} WHERE id = ${id}`;
-    } catch (error) {   
-    console.error("Error in updateUser function:", error.message);
-    throw error;
-    }
-}   
-
-async function deleteUser(id) {
-  try {
-    await sql`DELETE FROM Persons WHERE id = ${id}`;
-  } catch (error) {
-    console.error("Error in deleteUser function:", error.message);
-    throw error; 
-  }
-}
 
 async function updatePassword(whatsAppNo, newPassword) {
   try {
-    await sql`UPDATE Persons SET hashPassword = ${newPassword} WHERE whatsAppNo = ${whatsAppNo}`;
+    await sql`UPDATE Persons SET hashPassward = ${newPassword} WHERE whatsAppNo = ${whatsAppNo}`;
   } catch (error) {
     console.error("Error in updatePassword function:", error.message);
     throw error;
@@ -79,4 +71,4 @@ async function deleteProfileById(id) {
   }
 }
 
-module.exports = { createUser, getUserByWhatsAppNo, getUserById, updateUser, deleteUser, updatePassword,  updateProfile, deleteProfileById };
+module.exports = { createUser, getAllUsersData, getUserByWhatsAppNo, getUserById, updatePassword,  updateProfile, deleteProfileById };

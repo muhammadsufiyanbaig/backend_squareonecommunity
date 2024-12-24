@@ -36,7 +36,7 @@ async function updateAdmin(id, fullName, email, hashedPassword) {
   try {
     await sql`UPDATE Admin SET fullName = ${fullName}, email = ${email}, hashPassward = ${hashedPassword} WHERE id = ${id}`;
   } catch (error) {
-    console.error("Error in updateUser function:", error.message);
+    console.error("Error in update admin function:", error.message);
     throw error;
   }
 }
@@ -45,7 +45,7 @@ async function deleteAdmin(id) {
   try {
     await sql`DELETE FROM Admin WHERE id = ${id}`;
   } catch (error) {
-    console.error("Error in deleteUser function:", error.message);
+    console.error("Error in delete admin function:", error.message);
     throw error;
   }
 }
