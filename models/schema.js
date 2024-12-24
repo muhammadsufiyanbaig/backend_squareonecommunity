@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS eventdetails (
 async function initializeDatabase() {
   try {
     await createUserTable();
-    await createUserOtpTable();
+    // await createUserOtpTable();
     await createAdminTable();
     await createBrandsTable();
     await createDealsTable();
