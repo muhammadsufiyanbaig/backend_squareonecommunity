@@ -36,12 +36,12 @@ const SignUp = async (req, res) => {
     } else if (!gender) {
       return res.status(400).json({ message: "Gender is required" });
     }
-    if (!isValidPhone(whatsAppNo)) {
-      return res.status(400).json({
-        message: "Invalid WhatsApp number format",
-        pattern: "+xx-xxxxxxxxxx",
-      });
-    }
+    // if (!isValidPhone(whatsAppNo)) {
+    //   return res.status(400).json({
+    //     message: "Invalid WhatsApp number format",
+    //     pattern: "+xx-xxxxxxxxxx",
+    //   });
+    // }
     if (!isValidDateOfBirth(dateOfBirth)) {
       return res.status(400).json({
         message: "Invalid Date of Birth format",
@@ -85,12 +85,13 @@ const newPassword = async (req, res) => {
     return res.status(400).json({ message: "WhatsApp number is required" });
   } else if (!newPassword) {
     return res.status(400).json({ message: "New password is required" });
-  } else if (!isValidPhone(whatsAppNo)) {
-    return res.status(400).json({
-      message: "Invalid WhatsApp number format",
-      pattern: "+xx-xxxxxxxxxx",
-    });
-  }
+  } 
+  //  if (!isValidPhone(whatsAppNo)) {
+  //   return res.status(400).json({
+  //     message: "Invalid WhatsApp number format",
+  //     pattern: "+xx-xxxxxxxxxx",
+  //   });
+  // }
   try {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     await updatePassword(whatsAppNo, hashedPassword);
@@ -108,12 +109,13 @@ const Login = async (req, res) => {
     return res.status(400).json({ message: "WhatsApp number is required" });
   } else if (!password) {
     return res.status(400).json({ message: "Password is required" });
-  } else if (!isValidPhone(whatsAppNo)) {
-    return res.status(400).json({
-      message: "Invalid WhatsApp number format",
-      pattern: "+xx-xxxxxxxxxx",
-    });
-  }
+  } 
+  //  if (!isValidPhone(whatsAppNo)) {
+  //   return res.status(400).json({
+  //     message: "Invalid WhatsApp number format",
+  //     pattern: "+xx-xxxxxxxxxx",
+  //   });
+  // }
   try {
     const user = await getUserByWhatsAppNo(whatsAppNo);
     if (user.length === 0) {
