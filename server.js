@@ -1,3 +1,5 @@
+const cluster = require("cluster");
+const os = require("os");
 const { initializeDatabase } = require("./models/schema");
 require("dotenv").config();
 const express = require("express");
@@ -45,7 +47,27 @@ app.use("/support", supportRoutes);
 app.use("/code", codeRoutes);
 app.use("/event", eventRoutes);
 
+if (cluster.isMaster) {
+  const numCPUs = os.cpus().length;
+  console.log(`Number of CPUs is ${numCPUs}`);
+  
+  console.log(`Master ${process.pid} is running`);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+  // Fork workers
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on("exit", (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+    cluster.fork(); // Restart the worker
+  });
+} else {
+  // Workers can share any TCP connection
+  // In this case, it is an HTTP server
+  app.listen(PORT, () => {
+    console.log(`Worker ${process.pid} started`);
+  });
+}
+
+module.exports = app;
