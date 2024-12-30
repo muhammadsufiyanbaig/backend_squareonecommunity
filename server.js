@@ -22,9 +22,9 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: ["http://localhost:3000", "https://squareonecommunity.vercel.app/"],
+    methods: ["GET", "POST", "PUT", "DELETE" , "OPTIONS" , "PATCH", "HEAD" , "CONNECT"], // Add other methods as needed
+    allowedHeaders: ["Content-Type", "Authorization" , "Access-Control-Allow-Origin"],
     credentials: true,
   })
 );
