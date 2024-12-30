@@ -57,8 +57,10 @@ const AdminLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
     const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET, { expiresIn: '72h' });
+    console.log(token);
     
-    res.cookie('token', token, { httpOnly: false, secure: false});
+    
+    res.cookie('token', token);
     res.status(200).json({ message: "Login successful", data: user });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error: error.message });
@@ -96,7 +98,8 @@ const editAdminProfile = async (req, res) => {
       .json({message: "Invalid email format",});
   }
   try {
-    await updateAdmin(id, fullName,  email, hashedPassword);
+    const hashedPassword1 = await bcrypt.hash(hashedPassword, 10);
+    await updateAdmin(id, fullName,  email, hashedPassword1);
     res.status(200).json({ message: "Profile updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error updating profile", error: error.message });
