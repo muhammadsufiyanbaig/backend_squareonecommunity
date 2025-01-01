@@ -3,8 +3,8 @@ const { createAd, getAllAds, editAd, deleteAd, getRunningAds } = require("../con
 const router = express.Router();
 
 router.post("/create", createAd);
-router.post("/get", getAllAds);
-router.post("/get/running", getRunningAds);
+router.get("/get", getAllAds);
+router.get("/get/running", getRunningAds);
 router.put("/edit", editAd);
 router.delete("/delete", deleteAd);
 
