@@ -11,7 +11,7 @@ const createComplaints = async (req, res) => {
     return res.status(400).json({ message: "Tittle is required" });
   } else if (!message) {
     return res.status(400).json({ message: "Message is required" });
-  } else if (!status) {
+  } else if (!status === null) {
     return res.status(400).json({ message: "Status is required" });
   } 
   try {
