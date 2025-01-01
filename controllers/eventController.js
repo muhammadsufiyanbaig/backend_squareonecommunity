@@ -101,9 +101,9 @@ const editEventDetails = async (req, res) => {
     return res.status(400).json({ message: "User Id is required" });
   } else if (!eventId) {
     return res.status(400).json({ message: "Event Id is required" });
-  } else if (!liked) {
+  } else if (liked !== null) {
     return res.status(400).json({ message: "liked is required" });
-  } else if (!going) {
+  } else if (going !== null) {
     return res.status(400).json({ message: "going is required" });
   } 
   try {
