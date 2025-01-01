@@ -22,14 +22,29 @@ async function getDealById(id) {
   }
 }
 
-async function updateDeal(id, title, description, tagline, startDate, endDate, Picture, Banner) {
+async function updateDeal(id, brandId, title, description, tagline, startDate, endDate, Picture, Banner) {
   try {
-    await sql`UPDATE DEALS SET title = ${title}, description = ${description}, tagline = ${tagline}, startDate = ${startDate}, endDate = ${endDate}, Picture = ${Picture}, Banner = ${Banner}  WHERE id = ${id}`;
+    // Using optional parameters for flexibility
+    const result = await sql`
+      UPDATE DEALS
+      SET 
+        brandId = COALESCE(${brandId}, brandId), 
+        title = COALESCE(${title}, title), 
+        description = COALESCE(${description}, description), 
+        tagline = COALESCE(${tagline}, tagline), 
+        startDate = COALESCE(${startDate}, startDate), 
+        endDate = COALESCE(${endDate}, endDate), 
+        Picture = COALESCE(${Picture}, Picture), 
+        Banner = COALESCE(${Banner}, Banner)
+      WHERE id = ${id};
+    `;
+    return result;
   } catch (error) {
     console.error("Error in updateDeal function:", error.message);
     throw error;
   }
 }
+
 
 async function removeDeal(id) {
   try {
