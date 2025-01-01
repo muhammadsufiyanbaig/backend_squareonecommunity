@@ -20,14 +20,14 @@ async function getAllComplaint() {
     support.message,
     support.status,
     support.userId,
-    person.fullName,
-    person.whatsappNo
+    persons.fullName,
+    persons.whatsappNo
 FROM 
     support
 INNER JOIN 
-    person
+    Persons
 ON 
-    support.userId = person.id;
+    support.userId = persons.id;
 `;
     return complaint;
   } catch (error) {
