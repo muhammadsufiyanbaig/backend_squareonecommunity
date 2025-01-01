@@ -44,7 +44,7 @@ const editComplaints = async (req, res) => {
   const {id, status } = req.body;
   if(!id) {
     return res.status(400).json({ message: "Id is required" });
-  } else if (status !== null) {
+  } else if (!status === null) {
     return res.status(400).json({ message: "Status is required" });
   } 
   try {
