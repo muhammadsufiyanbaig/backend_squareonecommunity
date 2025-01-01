@@ -103,7 +103,6 @@ async function createCodesTable() {
 );
  `;
 }
-
 async function createAdsTable() {
   await sql`
   CREATE TABLE IF NOT EXISTS Ads (
@@ -111,10 +110,13 @@ async function createAdsTable() {
     Banner TEXT,
     CreatedBy UUID REFERENCES Admin(id),
     BrandId UUID REFERENCES BRANDS(id),
-    DealId UUID REFERENCES DEALS(id)
-);
- `;
+    DealId UUID REFERENCES DEALS(id),
+    startAt TIMESTAMP,
+    endAt TIMESTAMP
+  );
+  `;
 }
+
 async function createSupportTable() {
   await sql`
   CREATE TABLE IF NOT EXISTS support (

@@ -78,20 +78,24 @@ WHERE
   }
 }
 
-async function updateEventDetails(
-  id,
-  userId,
-  eventId,
-  liked,
-  going,
-) {
+async function updateEventDetails(id, userId, eventId, liked, going) {
   try {
-    await sql`UPDATE eventdetails SET userId = ${userId}, eventId = ${eventId}, liked = ${liked}, going = ${going}  WHERE id = ${id}`;
+    const result = await sql`
+      UPDATE eventdetails
+      SET 
+        userId = COALESCE(${userId}, userId), 
+        eventId = COALESCE(${eventId}, eventId), 
+        liked = COALESCE(${liked}, liked), 
+        going = COALESCE(${going}, going)
+      WHERE id = ${id};
+    `;
+    return result;
   } catch (error) {
-    console.error("Error in updateAd function:", error.message);
+    console.error("Error in updateEventDetails function:", error.message);
     throw error;
   }
 }
+
 
 async function updateEvent(
   id,
