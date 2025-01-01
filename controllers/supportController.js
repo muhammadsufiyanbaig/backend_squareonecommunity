@@ -41,16 +41,14 @@ const getAllComplaints = async (req, res) => {
 };
 
 const editComplaints = async (req, res) => {
-  const {id, userId, status } = req.body;
+  const {id, status } = req.body;
   if(!id) {
     return res.status(400).json({ message: "Id is required" });
-  } else if (!userId) {
-    return res.status(400).json({ message: "User Id is required" });
   } else if (!status) {
     return res.status(400).json({ message: "Status is required" });
   } 
   try {
-    await updateComplaint(id, userId, status );
+    await updateComplaint(id, status );
     res.status(200).json({ message: "Complaint updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error updating Deal", error: error.message });

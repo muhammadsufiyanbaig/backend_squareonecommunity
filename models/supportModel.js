@@ -36,9 +36,9 @@ ON
   }
 }
 
-async function updateComplaint(id, userId, status) {
+async function updateComplaint(id, status) {
   try {
-    await sql`UPDATE support SET status = ${status}, userId = ${userId} WHERE id = ${id}`;
+    await sql`UPDATE support SET status = ${status} WHERE id = ${id}`;
   } catch (error) {
     console.error("Error in updateAd function:", error.message);
     throw error;
