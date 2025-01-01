@@ -57,9 +57,6 @@ const AdminLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
     const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET, { expiresIn: '72h' });
-    console.log(token);
-    
-    
     res.cookie('token', token);
     res.status(200).json({ message: "Login successful", data: user });
   } catch (error) {
