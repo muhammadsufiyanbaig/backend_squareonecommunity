@@ -58,7 +58,7 @@ const AdminLogin = async (req, res) => {
     }
     const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET, { expiresIn: '72h' });
     res.cookie('token', token);
-    res.status(200).json({ message: "Login successful", data: user });
+    res.status(200).json({ message: "Login successful", data: user, token });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error: error.message });
   }
