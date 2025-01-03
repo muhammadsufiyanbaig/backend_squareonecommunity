@@ -18,7 +18,7 @@ const eventRoutes = require("./Routes/eventRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cookieParser());
+app.use(cookieParser()); // Ensure this is before any route handlers
 
 app.use(
   cors({
@@ -32,7 +32,6 @@ app.use(
 app.options("*", cors());
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(cookieParser());
 
 // Initialize all tables
 initializeDatabase();
