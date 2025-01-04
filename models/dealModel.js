@@ -1,11 +1,11 @@
 const { sql } = require("../utils/db");
 const { v4: uuidv4 } = require("uuid");
 
-async function createDeal(brandId, title, description, tagline, startDate, endDate, Picture, Banner) {
+async function createDeal(brandId, title, description, tagline, startDate, endDate, Picture, Banner, type) {
   const uniqueId = uuidv4();
   try {
-    await sql`INSERT INTO DEALS (id, brandId, title, description, tagline, startDate, endDate, Picture, Banner)
-              VALUES (${uniqueId}, ${brandId}, ${title}, ${description}, ${tagline}, ${startDate}, ${endDate}, ${Picture}, ${Banner})`;
+    await sql`INSERT INTO DEALS (id, brandId, title, description, tagline, startDate, endDate, Picture, Banner, type )
+              VALUES (${uniqueId}, ${brandId}, ${title}, ${description}, ${tagline}, ${startDate}, ${endDate}, ${Picture}, ${Banner}, ${type})`;
   } catch (error) {
     console.error("Error in createDeal function:", error.message);
     throw error; 
@@ -22,7 +22,7 @@ async function getDealById(id) {
   }
 }
 
-async function updateDeal(id, brandId, title, description, tagline, startDate, endDate, Picture, Banner) {
+async function updateDeal(id, brandId, title, description, tagline, startDate, endDate, Picture, Banner, type) {
   try {
     // Using optional parameters for flexibility
     const result = await sql`
@@ -35,7 +35,8 @@ async function updateDeal(id, brandId, title, description, tagline, startDate, e
         startDate = COALESCE(${startDate}, startDate), 
         endDate = COALESCE(${endDate}, endDate), 
         Picture = COALESCE(${Picture}, Picture), 
-        Banner = COALESCE(${Banner}, Banner)
+        Banner = COALESCE(${Banner}, Banner),
+        type = COALESCE(${type}, type
       WHERE id = ${id};
     `;
     return result;

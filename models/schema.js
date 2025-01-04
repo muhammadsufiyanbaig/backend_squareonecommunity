@@ -58,7 +58,7 @@ async function createBrandsTable() {
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     BrandWhatsAppNo VARCHAR(20),
     Description TEXT,
-    WorkingHours VARCHAR(100)
+    WorkingHours JSONB
 );
   `;
 }
@@ -75,7 +75,8 @@ async function createDealsTable() {
     endDate TIMESTAMP,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     Picture TEXT,
-    Banner TEXT
+    Banner TEXT,
+    type VARCHAR(50)
 );
   `;
 }

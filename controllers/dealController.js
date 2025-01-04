@@ -5,7 +5,7 @@ const createDeals = async (req, res) => {
   if (!req.body) {
     return res.status(400).send({ error: "Request body is missing" });
   }
-  const { brandId, title, description, tagline, startDate, endDate, Picture, Banner } = req.body;
+  const { brandId, title, description, tagline, startDate, endDate, Picture, Banner, type } = req.body;
   if (!brandId) {
     return res.status(400).json({ message: "Brand Id is required" });
   } else if (!title) {
@@ -22,9 +22,14 @@ const createDeals = async (req, res) => {
     return res.status(400).json({ message: "Picture is required" });
   }else if (!Banner) {
     return res.status(400).json({ message: "Banner is required" });
+  }else if (!type) {
+    return res.status(400).json({ message: "Type is required" });
+  }
+  if (type !== "discount" && type !== "deal") {
+    return res.status(400).json({ message: "Type must be discount or deal" });
   }
   try {
-    await createDeal(brandId, title, description, tagline, startDate, endDate, Picture, Banner);
+    await createDeal(brandId, title, description, tagline, startDate, endDate, Picture, Banner, type);
     res.status(201).json({ message: "Deal is successfully created" });
   } catch (error) {
     res
@@ -54,7 +59,7 @@ const getDeal = async (req, res) => {
 };
 
 const editDeal = async (req, res) => {
-  const { id, brandId, title, description, tagline, startDate, endDate, Picture, Banner } = req.body;
+  const { id, brandId, title, description, tagline, startDate, endDate, Picture, Banner, type } = req.body;
   if(!id) {
     return res.status(400).json({ message: "Id is required" });
   } else if (!brandId) {
@@ -73,9 +78,14 @@ const editDeal = async (req, res) => {
     return res.status(400).json({ message: "Picture is required" });
   } else if (!Banner) {
     return res.status(400).json({ message: "Banner is required" });
+  } else if (!type) {
+    return res.status(400).json({ message: "Type is required" });
   }
+  if (type !== "discount" && type !== "deal") {
+    return res.status(400).json({ message: "Type must be discount or deal" });
+  } 
   try {
-    await updateDeal( id, brandId, title, description, tagline, startDate, endDate, Picture, Banner);
+    await updateDeal( id, brandId, title, description, tagline, startDate, endDate, Picture, Banner, type);
     res.status(200).json({ message: "Deal updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error updating Deal", error: error.message });

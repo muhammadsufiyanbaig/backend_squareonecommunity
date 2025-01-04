@@ -53,6 +53,7 @@ async function getAllBrandsWithDealsAndWithCode() {
       'createdAt', d.createdAt,
       'Picture', d.Picture,
       'Banner', d.Banner,
+      'type', d.type,
       'code', (
         SELECT json_agg(
           json_build_object(
@@ -102,7 +103,8 @@ async function getAllBrandsWithDeals() {
             'enddate', d."enddate",
             'createdat', d."createdat",
             'picture', d."picture",
-            'banner', d."banner"
+            'banner', d."banner",
+            'type', d.type,
         )
     ) AS "deals"
 FROM
