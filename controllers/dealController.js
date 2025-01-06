@@ -88,7 +88,7 @@ const editDeal = async (req, res) => {
     await updateDeal( id, brandId, title, description, tagline, startDate, endDate, Picture, Banner, type);
     res.status(200).json({ message: "Deal updated successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error updating Deal", error: error.message });
+    res.status(500).json({ message: "Error updating Deal", error: error.message, errorStack: error.stack });
   }
 };
 

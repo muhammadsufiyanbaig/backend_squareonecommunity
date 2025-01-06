@@ -36,7 +36,7 @@ async function updateDeal(id, brandId, title, description, tagline, startDate, e
         endDate = COALESCE(${endDate}, endDate), 
         Picture = COALESCE(${Picture}, Picture), 
         Banner = COALESCE(${Banner}, Banner),
-        type = COALESCE(${type}, type
+        type = COALESCE(${type}, type),
       WHERE id = ${id};
     `;
     return result;
