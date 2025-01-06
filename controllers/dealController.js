@@ -59,8 +59,8 @@ const getDeal = async (req, res) => {
 };
 
 const editDeal = async (req, res) => {
-  const { id, brandId, title, description, tagline, startDate, endDate, Picture, Banner, type } = req.body;
-  if(!id) {
+  const { dealid, brandId, title, description, tagline, startDate, endDate, Picture, Banner, type } = req.body;
+  if(!dealid) {
     return res.status(400).json({ message: "Id is required" });
   } else if (!brandId) {
     return res.status(400).json({ message: "Brand Id is required" });
@@ -85,7 +85,7 @@ const editDeal = async (req, res) => {
     return res.status(400).json({ message: "Type must be discount or deal" });
   } 
   try {
-    await updateDeal( id, brandId, title, description, tagline, startDate, endDate, Picture, Banner, type);
+    await updateDeal( dealid, brandId, title, description, tagline, startDate, endDate, Picture, Banner, type);
     res.status(200).json({ message: "Deal updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error updating Deal", error: error.message, errorStack: error.stack });

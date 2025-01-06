@@ -22,7 +22,7 @@ async function getDealById(id) {
   }
 }
 
-async function updateDeal(id, brandId, title, description, tagline, startDate, endDate, Picture, Banner, type) {
+async function updateDeal(dealid, brandId, title, description, tagline, startDate, endDate, Picture, Banner, type) {
   try {
     // Using optional parameters for flexibility
     const result = await sql`
@@ -37,7 +37,7 @@ async function updateDeal(id, brandId, title, description, tagline, startDate, e
         Picture = COALESCE(${Picture}, Picture), 
         Banner = COALESCE(${Banner}, Banner),
         type = COALESCE(${type}, type)
-      WHERE id = ${id};
+      WHERE id = ${dealid};
     `;
     return result;
   } catch (error) {
