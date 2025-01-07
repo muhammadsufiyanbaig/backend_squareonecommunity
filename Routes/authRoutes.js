@@ -8,8 +8,8 @@ router.post('/new-password', newPassword);
 router.post('/login', Login);
 router.get('/logout',authenticateToken ,Logout);
 router.post('/profile', authenticateToken,getProfile);
-router.post('/allusers', authenticateToken,getAllUsersForAdmin);
-router.put('/profile/edit', authenticateToken,editProfile);
+router.get('/allusers', getAllUsersForAdmin);
+router.put('/profile/edit', editProfile);
 router.delete('/profile/delete', authenticateToken, deleteProfile);
 
 module.exports = router;
