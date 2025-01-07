@@ -24,7 +24,7 @@ async function getUserByWhatsAppNo(whatsAppNo) {
 }
 async function getAllUsersData() {
   try {
-    const user = await sql`SELECT * FROM Persons}`;
+    const user = await sql`SELECT * FROM Persons`;
     return user;
   } catch (error) {
     console.error("Error in getUserByWhatsAppNo function:", error.message);
