@@ -4,7 +4,9 @@
   "main": "server.js",
   "scripts": {
     "test": "nodemon server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start:prod": "NODE_ENV=production node server.js",
+    "start": "npm install --omit=dev && node server.js"
   },
   "keywords": [],
   "author": "",
@@ -23,9 +25,5 @@
     "nodemailer": "^6.9.16",
     "nodemon": "^3.1.7",
     "uuid": "^11.0.3"
-  },
-  "devDependencies": {
-    "drizzle-kit": "^0.28.1",
-    "tsx": "^4.19.2"
   }
 }
