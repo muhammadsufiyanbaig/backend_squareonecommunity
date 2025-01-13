@@ -106,7 +106,7 @@ async function getAllBrandsWithDeals() {
             'createdat', d."createdat",
             'picture', d."picture",
             'banner', d."banner",
-            'type', d.type,
+            'type', d.type
         )
     ) AS "deals"
 FROM
