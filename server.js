@@ -66,6 +66,7 @@ if (cluster.isMaster) {
   // In this case, it is an HTTP server
   app.listen(PORT, () => {
     console.log(`Worker ${process.pid} started`);
+    console.log(`Server is running on port http://localhost:${PORT}`);
   });
 }
 

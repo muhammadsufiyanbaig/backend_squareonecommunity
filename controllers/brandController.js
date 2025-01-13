@@ -57,7 +57,7 @@ const getAllBrands = async (req, res) => {
     const brands = await getAllBrandsWithDeals();
     res.status(200).json({ data: brands , message: "All brands with deals" });
   } catch (error) {
-    res.status(500).json({ message: "Error getting all brands with deals", error: error.message });
+    res.status(500).json({ message: "Error getting all brands with deals", error: error.message, stack: error.stack  });
   }
 }
 const getAllBrandsForAdmin = async (req, res) => {
@@ -65,7 +65,7 @@ const getAllBrandsForAdmin = async (req, res) => {
     const brands = await getAllBrandsWithDealsAndWithCode();
     res.status(200).json({ data: brands , message: "All brands with deals" });
   } catch (error) {
-    res.status(500).json({ message: "Error getting all brands with deals", error: error.message });
+    res.status(500).json({ message: "Error getting all brands with deals", error: error.message, stack: error.stack });
   }
 }
 

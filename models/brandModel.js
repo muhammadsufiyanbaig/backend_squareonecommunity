@@ -74,6 +74,8 @@ LEFT JOIN DEALS d ON b.id = d.brandId
 GROUP BY b.id;
 
 `;
+console.log(brands);
+
     return brands;
   } catch (error) {
     console.error("Error in getAllBrandsWithDeals function:", error.message);
